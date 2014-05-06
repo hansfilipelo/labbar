@@ -1,0 +1,38 @@
+# Compiled files
+*.aux
+*.log
+*.pdf
+*.toc
+*.out
+*.gz
+.DS_Store
+
+# Executables #
+###############
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.app
+*.user
+*.hex
+*.elf
+*.mk
+*.d
+*.eep
+*.lss
+*.map
+*.srec
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehtthumbs.db
+Thumbs.db
+
