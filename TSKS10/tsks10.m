@@ -2,7 +2,7 @@
 
 % Ladda signal
 auload signal-hanel742.wav;
-% Ursprungligen i Matlab - numera i Octave så konvertera variabelnamn
+% Ursprungligen i Matlab - numera i Octave. Konvertera variabelnamn
 data = ans;
 
 fs = 400000;
@@ -16,7 +16,7 @@ figure(1);
 plot(fAxis,absF);
 xlabel("Frekvens (Hz)");
 
-% Filtrering av första delen
+% Filtrering av forsta delen
 [B,A] = butter(10,[0.2, 0.4]);
 filterData1 = filter(B,A,data);
 tAxis = [0:19.5/l:19.5-(19.5/l)];
@@ -39,20 +39,20 @@ plot(tAxis,filterData3);
 xlabel("Tid (s)");
  
 % filterData3 -> bara vitt brus. 
-% filterData1 innehåller rimligen information. 
+% filterData1 innehaller rimligen information. 
 
-% Bärfrekvensen för filterData1 är: 
+% Barfrekvensen for filterData1 ar: 
 fc=57000;
 
 
 %--------- Uppgift 2 ---------
- 
+
 %X-correlerar vitt brus  
 Z = xcorr(filterData3,filterData3);
  
 plot(Z);
  
-% Största toppen ges vid 7.8*10^6 ms
+% Storsta toppen ges vid 7.8*10^6 ms
 % sidotoppar vid 7,948*10^6 och 7,652*10^6
 % (7,948-7,8)*10^6 = 148 000 samples
 % 148 000 samples / 400 000 hz = 0,37 s
@@ -60,7 +60,7 @@ plot(Z);
 
 %--------- Uppgift 3 ---------
 % Filtrerar bort eko
-% Använder första 148 000 samples för att ta bort ekot som kommer sen.
+% Anvander forsta 148 000 samples for att ta bort ekot som kommer sen.
 nrOfSamples = 148000;
 
 filtered = zeros(size(filterData1));
@@ -80,7 +80,7 @@ t=[0:1/fs:19.5-(1/fs)];
 I=2*cos(2*pi*fc*t' + pi/2).*filtered;
 Q=-2*sin(2*pi*fc*t' + pi/2).*filtered;
 
-% Skapa frekvensspektra för I för att se hur den ska filtreras
+% Skapa frekvensspektra for I for att se hur den ska filtreras
 fI = fft(I);
 absI = abs(fI);
 plot(f,fI)
@@ -88,7 +88,7 @@ plot(f,fI)
 [B,A] = butter(10,0.2,'low'); 
 filter_I = filter(B,A,I);
 
-% Skapa frekvensspektra för Q för att se hur den ska filtreras
+% Skapa frekvensspektra for Q for att se hur den ska filtreras
 fQ= fft(Q);
 absQ=abs(fQ);
 plot(f,fQ)
