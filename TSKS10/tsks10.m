@@ -104,7 +104,9 @@ xlabel("Frekvens (Hz)");
 % Filtrera Q
 qFiltered = filter(B,A,Q);
 
+% Sampla ner sa ljud gar att spela
 qAudio=decimate(qFiltered, 9);
 iAudio=decimate(iFiltered, 9);
  
+% Spela ljud
 playsound(qAudio)
