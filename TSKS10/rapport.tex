@@ -121,7 +121,7 @@ samples = 0,37 \cdot 400 000 = 148 000
 ~\\
 Eftersom ekot är fördröjt med $148 000$ samples är de första $148 000$ samplingarna av den utfiltrerade intressanta datan från frekvenstopp 1 utan eko. 
 
-Med hjälp utav dessa $148 000$ första samples kan man sedan plocka bort ekot från nästkommande $148 000$ samples. Loopar man sedan igenom alla samples ($7 800 000$) filtrerar man helt bort ekot. 
+Med hjälp utav dessa $148 000$ första samples kan man sedan plocka bort ekot från nästkommande $148 000$ samples. Loopar man sedan igenom alla samples ($7 800 000$) och filtrerar man helt bort ekot från dessa. 
 
 Processen är inte helt enkel att uttrycka i ord - därav följer nedan utdrag ur den kod som finns i Appendix B. 
 
