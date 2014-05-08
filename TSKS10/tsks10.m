@@ -1,7 +1,10 @@
 %--------- Uppgift 1 ---------
 
-% Ladda signal
+% Ladda signal i Octave
 auload signal-hanel742.wav;
+
+% Ladda signal i Matlab
+% open signal-hanel742;
 % Ursprungligen i Matlab - numera i Octave. Konvertera variabelnamn
 data = ans;
 
@@ -108,5 +111,8 @@ qFiltered = filter(B,A,Q);
 qAudio=decimate(qFiltered, 9);
 iAudio=decimate(iFiltered, 9);
  
-% Spela ljud
+% Spela ljud i Octave pa Linux
 playsound(qAudio)
+
+% Spela ljud i Matlab
+% soundsc(qAudio)
