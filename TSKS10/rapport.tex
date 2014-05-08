@@ -28,11 +28,20 @@ Vid kommunikation används ofta I-/Q-modulering för att överföra en signal in
 
 \subsection{Syfte}
 
-Syftet med denna laboration är att finna bärfrekvens för en given signal, filtrera bort oönskade delar av överföringen och sedan I-/Q-demodulera signalen för att extrahera informationen. 
+Syftet med denna laboration är att finna bärfrekvens för en given signal, filtrera bort oönskade delar av överföringen och sedan I-/Q-demodulera signalen för att extrahera relevant information. 
 
 \subsection{Materiel och förutsättningar}
 
-Filen signal-hanel742.wav är given med den kända samplingsfrekvensen 400 kHz. För att utföra laborationen används GNU Octave med vertygslådor för ljud samt signaler installerat. 
+Filen signal-hanel742.wav är given med den kända samplingsfrekvensen 400 kHz. Givet är också att filen innehåller en smalbandig signal som är I-/Q-modulerad och har skickats genom filtret nedan. 
+
+\begin{gather}
+h(t) = \delta(t - \tau_1) + \delta(t - \tau_2)
+\label{equ:filter}
+\end{gather}
+
+På förhand ges också att bärfrekvensen är en multipel av 19 kHz.
+
+För att utföra laborationen används GNU Octave med vertygslådor för ljud samt signaler (octave-audio och octave-signal) installerat. 
 
 % -------- Metod ------------
 \newpage
@@ -56,6 +65,8 @@ normerad = \frac{frekvens \cdot 2}{samplingsfrekvens}
 \label{equ:normFreq}
 \end{gather}
 
+\newpage
+
 Genom att utläsa frekvenserna ur topparna på graferna kan man se att topparna har bärfrekvenser kring frekvenserna i tabell \ref{table:carryfreq}. Topparna räknas från origo och utåt och filtrenas gränsfrekvens anges som normerad frekvens. 
 ~\\
 \begin{center}
@@ -71,7 +82,7 @@ Genom att utläsa frekvenserna ur topparna på graferna kan man se att topparna 
 ~\\
 Filtrerar man sedan den givna signalen med hjälp av bandpassfilter med givna gränser ges utseende enligt figurer i appendix A. Enligt utseendet på graferna ser frekvenstopp 1 ut att innehålla någon form av information, medan den tredje toppen mest verkar innehålla vitt brus. 
 
-Frekvenstopp 2 är mer svårbedömd - men en rimlig uppskattning är att den har ett alldeles för periodiskt utseende för att inehålla någon vettig information. 
+Frekvenstopp 2 är mer svårbedömd - men en rimlig uppskattning är att den har ett alldeles för periodiskt utseende för att inehålla någon intressant information. 
 
 % -------- Slutsatser ------------
 
