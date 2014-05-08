@@ -92,19 +92,19 @@ xlabel("Frekvens (Hz)");
 
 % Filtrera I
 [B,A] = butter(10,0.2,'low'); 
-filter_I = filter(B,A,I);
+iFiltered = filter(B,A,I);
 
 % Skapa frekvensspektra for Q for att se hur den ska filtreras
-fQ= fft(Q);
-absQ=abs(fQ);
-plot(fAxis,fQ)
+fQ = fft(Q);
+absQ = abs(fQ);
 figure(7);
+plot(fAxis,fQ)
 xlabel("Frekvens (Hz)");
 
 % Filtrera Q
-filter_Q = filter(B,A,Q);
+qFiltered = filter(B,A,Q);
 
-ljud_Q=decimate(filter_Q, 40);
-ljud_I=decimate(filter_I, 40);
+qAudio=decimate(qFiltered, 9);
+iAudio=decimate(iFiltered, 9);
  
-soundsc(ljud_Q);
+playsound(qAudio)
