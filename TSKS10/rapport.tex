@@ -39,7 +39,9 @@ h(t) = \delta(t - \tau_1) + \delta(t - \tau_2)
 \label{equ:filter}
 \end{gather}
 
-På förhand ges också att bärfrekvensen före relevant är en multipel av 19 kHz.
+På förhand ges också att bärfrekvensen för relevant del av signalen är en multipel av 19 kHz.
+
+Signalen innehåller två melodier samt två olika ordspråk. 
 
 För att utföra laborationen används GNU Octave med vertygslådor för ljud samt signaler (octave-audio och octave-signal) installerat. 
 
@@ -59,7 +61,7 @@ Jag börjar med att läsa in filen i Octave och sedan fouriertransformera signal
 \end{figure}
 \newpage
 
-\subsection{Att finna bärfrekvens}
+\subsection{Att finna bärfrekvensen}
 
 Jag vill nu filtrera ut signalelementen för de olika topparna ur totala signalen. För att skapa filter för tidsdiskreta signaler i Matlab eller Octave behöver man först normera frekvensgränserna. Topparnas normerade frekvens ges genom ekvation \ref{equ:normFreq}
 
@@ -85,18 +87,93 @@ Filtrerar man sedan den givna signalen med hjälp av bandpassfilter med givna gr
 
 Frekvenstopp 2 är mer svårbedömd - men en rimlig uppskattning är att den har ett alldeles för periodiskt utseende för att inehålla någon intressant information. 
 
-Närmsta multipel av 19 kHz för den uppskattade bärfrekvensen för topp 1 är 57 kHz, vilket väljs till bärfrekvens för fortsatta experiment. 
+Närmsta multipel av 19 kHz för den uppskattade bärfrekvensen, $f_c$ för topp 1 är 57 kHz, vilket väljs till bärfrekvens för fortsatta experiment. 
+
+\newpage
 
 \subsection{Filtrering}
 
+När signalen skickas genom filtret givet i uppgiften skapas ett eko med styrkan $90\%$ av ursprungliga signalen. Detta eko har en tidsfördröjning som är lika med beloppet av differensen av filtrets två tidsfördröjningar.
 
+\begin{gather}
+|\tau_1 - \tau_2|
+\label{equ:delay}
+\end{gather}
+
+Fördröjningen ges relativt enkelt av att x-korrelera det vita bruset i den tredje frekvenstoppen med sig självt. Detta ger tre tydliga toppar ur vilka man kan utläsa tidsfördröjningen. 
+
+\begin{figure}[htp]
+  \begin{center}
+  \includegraphics[keepaspectratio=true,width=\linewidth]{xCorr.png}  %skala och filnamn. 
+  \end{center}
+  \caption{Vitt brus x-korrelerat} %figurtext.
+  \label{fig:xCorr}
+\end{figure}
+~\\
+Mätningar ur figur \ref{fig:xCorr} ger att tidsfördröjningen är lika med $37 ms$. 
+
+Då vi samplar med en frekvens av $400 000 Hz$ ges tidsfördröjningen i antal samples enligt nedan. 
+
+\begin{gather}
+samples = 0,37 \cdot 400 000 = 148 000
+\label{equ:delaySamples}
+\end{gather}
+~\\
+Eftersom ekot är fördröjt med $148 000$ samples är de första $148 000$ samplingarna av den utfiltrerade intressanta datan från frekvenstopp 1 utan eko. 
+
+Med hjälp utav dessa $148 000$ första samples kan man sedan plocka bort ekot från nästkommande $148 000$ samples. Loopar man sedan igenom alla samples ($7 800 000$) filtrerar man helt bort ekot. 
+
+Processen är inte helt enkel att uttrycka i ord - därav följer nedan utdrag ur den kod som finns i Appendix B. 
+
+\begin{lstlisting}
+% Filtrerar bort eko
+% Anvander forsta 148 000 samples for att ta bort ekot som kommer sen.
+nrOfSamples = 148000;
+
+filtered = zeros(size(filterData1));
+filtered(1:nrOfSamples) = filterData1(1:nrOfSamples);
+
+for i = 0 : 50
+
+temp1 = filtered((1+nrOfSamples*i):(nrOfSamples + nrOfSamples*i));
+temp2 = filterData1((nrOfSamples+1+nrOfSamples*i):(i+2)*nrOfSamples);
+
+filtered((nrOfSamples+1+nrOfSamples*i):(i+2)*nrOfSamples) = temp2 - 0.9*temp1;
+
+end
+\end{lstlisting}
+~\\
+Där filterData1 är den filtrerade signalen innehållandess frekvenstopp 1. 
+
+\newpage
+
+\subsection{I-/Q-demodulation}
+
+För att demodulera signalen används principer som beskrivs av Erik G. Larsson (2014). I- och Q-komponenter ges enligt nedan: 
+
+\begin{gather}
+x_{I}(t) = \Large{H}\{2x(t)\cos{(2{\pi}f_{c}t + \theta)}\} \\
+x_{Q}(t) = -\Large{H}\{2x(t)\sin{(2{\pi}f_{c}t + \theta)}\}
+\label{equ:iq}
+\end{gather}
+
+Där $\theta$ är fasförskjutningen. Fasförskjutningen har tyvärr testats fram då möjligt område för den är relativt litet, $[0,\frac{\pi}{2}]$, och det vad undertecknad vet ej finns något sätt att entydigt bestämma fasförskjutningen. 
 
 
 % -------- Slutsatser ------------
 
 \newpage
 \section{Resultat och slutsats}
-Jag har funnit att bla
+
+Först spelas två melodier - varav en blinka lilla stjärna. Sedan hörs ordsspråket ''Man kan inte både ha kakan och äta den''.
+
+% -------- Appendix ---------------
+
+\newpage
+\section{Källförteckning}
+
+Larsson, Erik G, 2014. \textit{Signals, Information and Communications}. Draft 11342. Linköping. LiU-Press.
+
 
 % -------- Appendix ---------------
 

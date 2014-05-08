@@ -49,13 +49,16 @@ fc=57000;
 
 %X-correlerar vitt brus  
 Z = xcorr(filterData3,filterData3);
+xCorrAxis = [0:19.5/l:39-(39/l)];
+
+figure(5);
+plot(xCorrAxis,Z);
+xlabel("tau (s)");
+axis([18,21,-300,300]);
  
-plot(Z);
- 
-% Storsta toppen ges vid 7.8*10^6 ms
-% sidotoppar vid 7,948*10^6 och 7,652*10^6
-% (7,948-7,8)*10^6 = 148 000 samples
-% 148 000 samples / 400 000 hz = 0,37 s
+% Storsta toppen ges vid tau = 19,50 s
+% sidotoppar vid +- 0,37 s = 37 ms
+% 37 ms ger 0,37 s x 400000 Hz = 148 000 samples
 
 
 %--------- Uppgift 3 ---------
@@ -68,22 +71,25 @@ filtered(1:nrOfSamples) = filterData1(1:nrOfSamples);
 
 for i = 0 : 50
 
-noEcho = filtered((1+nrOfSamples*i):(nrOfSamples + nrOfSamples*i));
-echo = filterData1((nrOfSamples+1+nrOfSamples*i):(i+2)*nrOfSamples);
+temp1 = filtered((1+nrOfSamples*i):(nrOfSamples + nrOfSamples*i));
+temp2 = filterData1((nrOfSamples+1+nrOfSamples*i):(i+2)*nrOfSamples);
 
-filtered((nrOfSamples+1+nrOfSamples*i):(i+2)*nrOfSamples) = echo - 0.9*noEcho;
+filtered((nrOfSamples+1+nrOfSamples*i):(i+2)*nrOfSamples) = temp2 - 0.9*temp1;
 
 end
 
 %I/Q-demodulation
 t=[0:1/fs:19.5-(1/fs)];
-I=2*cos(2*pi*fc*t' + pi/2).*filtered;
-Q=-2*sin(2*pi*fc*t' + pi/2).*filtered;
+I=2*cos(2*pi*fc*t' + 5*pi/2).*filtered;
+Q=-2*sin(2*pi*fc*t' + 5*pi/2).*filtered;
 
 % Skapa frekvensspektra for I for att se hur den ska filtreras
 fI = fft(I);
 absI = abs(fI);
-plot(f,fI)
+figure(6);
+plot(fAxis,fI)
+xlabel("Frekvens (Hz)");
+
 % Filtrera I
 [B,A] = butter(10,0.2,'low'); 
 filter_I = filter(B,A,I);
@@ -91,7 +97,10 @@ filter_I = filter(B,A,I);
 % Skapa frekvensspektra for Q for att se hur den ska filtreras
 fQ= fft(Q);
 absQ=abs(fQ);
-plot(f,fQ)
+plot(fAxis,fQ)
+figure(7);
+xlabel("Frekvens (Hz)");
+
 % Filtrera Q
 filter_Q = filter(B,A,Q);
 
