@@ -14,7 +14,7 @@ fAxis=[-200000:fs/l:200000-(fs/l)];
 
 figure(1);
 plot(fAxis,absF);
-xlabel("Frekvens (Hz)");
+xlabel('Frekvens (Hz)');
 
 % Filtrering av forsta delen
 [B,A] = butter(10,[0.2, 0.4]);
@@ -22,21 +22,21 @@ filterData1 = filter(B,A,data);
 tAxis = [0:19.5/l:19.5-(19.5/l)];
 figure(2);
 plot(tAxis,filterData1);
-xlabel("Tid (s)");
+xlabel('Tid (s)');
 
 % Filtrering av andra delen
 [B,A] = butter(10,[0.5, 0.65]);
 filterData2 = filter(B,A,data);
 figure(3);
 plot(tAxis,filterData2);
-xlabel("Tid (s)");
+xlabel('Tid (s)');
  
 % Filtrering av tredje delen
 [B,A] = butter(10,[0.7, 0.8]);
 filterData3 = filter(B,A,data);
 figure(4);
 plot(tAxis,filterData3);
-xlabel("Tid (s)");
+xlabel('Tid (s)');
  
 % filterData3 -> bara vitt brus. 
 % filterData1 innehaller rimligen information. 
@@ -53,7 +53,7 @@ xCorrAxis = [0:19.5/l:39-(39/l)];
 
 figure(5);
 plot(xCorrAxis,Z);
-xlabel("tau (s)");
+xlabel('tau (s)');
 axis([18,21,-300,300]);
  
 % Storsta toppen ges vid tau = 19,50 s
@@ -88,7 +88,7 @@ fI = fft(I);
 absI = abs(fI);
 figure(6);
 plot(fAxis,fI)
-xlabel("Frekvens (Hz)");
+xlabel('Frekvens (Hz)');
 
 % Filtrera I
 [B,A] = butter(10,0.2,'low'); 
@@ -99,7 +99,7 @@ fQ = fft(Q);
 absQ = abs(fQ);
 figure(7);
 plot(fAxis,fQ)
-xlabel("Frekvens (Hz)");
+xlabel('Frekvens (Hz)');
 
 % Filtrera Q
 qFiltered = filter(B,A,Q);
