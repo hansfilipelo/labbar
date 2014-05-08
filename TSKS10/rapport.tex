@@ -16,18 +16,101 @@
 \usepackage{listings}
 \usepackage{xcolor,colortbl}
 \usepackage{hyperref}
+\usepackage{mcode}
+\usepackage{a4wide}
+\usepackage{caption}
 
 \begin{document}
 
 \section{Inledning}
 
-Denna laboration bla.
+Vid kommunikation används ofta I-/Q-modulering för att överföra en signal inom ett givet frekvensutrymme. I och med överföringen kan tidsfördröjningar införas. I mottagaränden måste dessa tidsfördröjningar kompenseras för innan överföringen sedan kan I-/Q-demoduleras för att extrahera ljudinformationen 
+
+\subsection{Syfte}
+
+Syftet med denna laboration är att finna bärfrekvens för en given signal, filtrera bort oönskade delar av överföringen och sedan I-/Q-demodulera signalen för att extrahera informationen. 
+
+\subsection{Materiel och förutsättningar}
+
+Filen signal-hanel742.wav är given med den kända samplingsfrekvensen 400 kHz. För att utföra laborationen används GNU Octave med vertygslådor för ljud samt signaler installerat. 
+
+% -------- Metod ------------
+\newpage
 
 \section{Metod}
-Bla bla. 
 
+Jag börjar med att läsa in filen i Octave och sedan fouriertransformera signalen för att få ut dess frekvensspektra: 
 
+\begin{figure}[htp]
+  \begin{center}
+  \includegraphics[keepaspectratio=true,width=\linewidth]{fft_orig_data.png}  %skala och filnamn. 
+  \end{center}
+  \caption{Dubbelsidigt amplitudspektrum för ursprunglig signal} %figurtext.
+  \label{fig:fft_orig_data}
+\end{figure}
+
+Jag vill nu filtrera ut signalelementen för de olika topparna ur totala signalen. För att skapa filter för tidsdiskreta signaler i Matlab eller Octave behöver man först normera frekvensgränserna. Topparnas normerade frekvens ges genom ekvation \ref{equ:normFreq}
+
+\begin{gather}
+normerad = \frac{frekvens \cdot 2}{samplingsfrekvens}
+\label{equ:normFreq}
+\end{gather}
+
+Genom att utläsa frekvenserna ur topparna på graferna kan man se att topparna har bärfrekvenser kring frekvenserna i tabell \ref{table:carryfreq}. Topparna räknas från origo och utåt och filtrenas gränsfrekvens anges som normerad frekvens. 
+~\\
+\begin{center}
+\begin{tabular}{c | c | c}
+	\hline
+	Topp & Ungefärlig bärfrekvens (Hz) & Gränsfrekvens filter \\ \hline
+	1 & $4,959 \cdot 10^4$ & 0.2-0.4 \\ \hline
+	2 & $8,313 \cdot 10^4$ & 0.5-0.65 \\ \hline
+	3 & $1,412 \cdot 10^5$ & 0.7-0.8 \\ \hline
+\end{tabular}
+\captionof{table}{B{\"a}rfrekvenser} \label{table:carryfreq}
+\end{center}
+~\\
+Filtrerar man sedan den givna signalen med hjälp av bandpassfilter med givna gränser ges utseende enligt figurer i appendix A. Enligt utseendet på graferna ser frekvenstopp 1 ut att innehålla någon form av information, medan den tredje toppen mest verkar innehålla vitt brus. 
+
+Frekvenstopp 2 är mer svårbedömd - men en rimlig uppskattning är att den har ett alldeles för periodiskt utseende för att inehålla någon vettig information. 
+
+% -------- Slutsatser ------------
+
+\newpage
 \section{Resultat och slutsats}
 Jag har funnit att bla
+
+% -------- Appendix ---------------
+
+\newpage
+\appendix
+\pagestyle{empty}
+\newgeometry{left=2cm,right=2cm,bottom=2cm,top=2cm}
+\section{Filtrerade signaler}
+
+\begin{figure}[htp]
+  \begin{center}
+  \includegraphics[keepaspectratio=true,width=\linewidth]{topp1_filter.png}  %skala och filnamn. 
+  \end{center}
+  \caption{Frekvenstopp 1 filtrerad} %figurtext.
+  \label{fig:topp1_filter}
+\end{figure}
+
+\begin{figure}[htp]
+  \begin{center}
+  \includegraphics[keepaspectratio=true,width=\linewidth]{topp2_filter.png}  %skala och filnamn. 
+  \end{center}
+  \caption{Frekvenstopp 2 filtrerad} %figurtext.
+  \label{fig:topp2_filter}
+\end{figure}
+
+\begin{figure}[htp]
+  \begin{center}
+  \includegraphics[keepaspectratio=true,width=\linewidth]{topp3_filter.png}  %skala och filnamn. 
+  \end{center}
+  \caption{Frekvenstopp 1 filtrerad} %figurtext.
+  \label{fig:topp3_filter}
+\end{figure}
+
+
 
 \end{document}
