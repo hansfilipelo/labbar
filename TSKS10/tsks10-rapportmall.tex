@@ -1,4 +1,8 @@
-\documentclass[a4paper,12pt,fleqn]{article}
+\documentclass[10pt,twocolumn]{article}
+
+\usepackage{times}
+\usepackage{mathptmx}  
+\usepackage{spverbatim}
 \usepackage{fixltx2e}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
@@ -20,7 +24,18 @@
 \usepackage{a4wide}
 \usepackage{caption}
 
+\raggedbottom
+\sloppy
+
+\title{Laborationsrapport i TSKS10 \emph{Signaler, Information och Kommunikation}}
+
+\author{Hans-Filip Elo \\ hanel74, 900109-5174 }
+
+\date{9 maj, 2014}
+
 \begin{document}
+
+\maketitle
 
 \section{Inledning}
 
@@ -146,7 +161,8 @@ end
 Där filterData1 är den filtrerade signalen innehållandess frekvenstopp 1. 
 
 \newpage
-
+~\\
+\newpage
 \subsection{I-/Q-demodulation}
 
 För att demodulera signalen används principer som beskrivs av Erik G. Larsson (2014). I- och Q-komponenter ges enligt nedan: 
@@ -167,9 +183,8 @@ Där $\theta$ är fasförskjutningen. Fasförskjutningen har tyvärr testats fra
 
 Först spelas två melodier - varav en blinka lilla stjärna. Sedan hörs ordsspråket ''Man kan inte både ha kakan och äta den'' samt ''Man ska inte säga Hin i död mans hus''. 
 
-% -------- Appendix ---------------
+% -------- Källor ---------------
 
-\newpage
 \section{Källförteckning}
 
 Larsson, Erik G, 2014. \textit{Signals, Information and Communications}. Draft 11342. Linköping. LiU-Press.
@@ -207,6 +222,8 @@ Larsson, Erik G, 2014. \textit{Signals, Information and Communications}. Draft 1
   \label{fig:topp3_filter}
 \end{figure}
 
+\newpage
+~\\
 \newpage
 \section{Kod för GNU Octave}
 

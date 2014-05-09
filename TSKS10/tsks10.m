@@ -5,6 +5,7 @@ auload signal-hanel742.wav;
 
 % Ladda signal i Matlab
 % open signal-hanel742;
+
 % Ursprungligen i Matlab - numera i Octave. Konvertera variabelnamn
 data = ans;
 
@@ -82,9 +83,12 @@ filtered((nrOfSamples+1+nrOfSamples*i):(i+2)*nrOfSamples) = temp2 - 0.9*temp1;
 end
 
 %I/Q-demodulation
-t=[0:1/fs:19.5-(1/fs)];
-I=2*cos(2*pi*fc*t' + 5*pi/2).*filtered;
-Q=-2*sin(2*pi*fc*t' + 5*pi/2).*filtered;
+t = [0:1/fs:19.5-(1/fs)];
+xI = 2*cos(2*pi*fc*t);
+xQ = -2*sin(2*pi*fc*t);
+
+I = xI'.*filtered;
+Q = xQ'.*filtered;
 
 % Skapa frekvensspektra for I for att se hur den ska filtreras
 fI = fft(I);
@@ -107,12 +111,15 @@ xlabel('Frekvens (Hz)');
 % Filtrera Q
 qFiltered = filter(B,A,Q);
 
-% Sampla ner sa ljud gar att spela
-qAudio=decimate(qFiltered, 9);
-iAudio=decimate(iFiltered, 9);
+
+% Sampla ner sa ljud gar att spela satt vardet till 9 i Octave, 40 i Matlab
+qAudio=decimate(qFiltered, 40);
+iAudio=decimate(iFiltered, 40);
  
 % Spela ljud i Octave pa Linux
-playsound(qAudio)
+% playsound(qAudio)
+% playsound(iAudio)
 
 % Spela ljud i Matlab
+% soundsc(iAudio)
 % soundsc(qAudio)
