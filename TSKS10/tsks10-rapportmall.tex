@@ -80,59 +80,49 @@ Jag börjar med att läsa in filen i Octave och sedan fouriertransformera signal
 
 \subsection{Att finna bärfrekvensen}
 
-Jag vill nu filtrera ut signalelementen för de olika topparna ur totala signalen. För att skapa filter för tidsdiskreta signaler i Matlab eller Octave behöver man först normera frekvensgränserna. Topparnas normerade frekvens ges genom ekvation \ref{equ:normFreq}
+Jag vill nu filtrera ut signalelementen för de olika topparna ur totala signalen. För att göra detta använder jag tre olika bandpassfilter med gränsfrekvenserna $[40000, 80000]$, $[100000, 130000]$ samt $[140000, 160000]$.
 
-\begin{gather}
-normerad = \frac{frekvens \cdot 2}{samplingsfrekvens}
-\label{equ:normFreq}
-\end{gather}
-
-Genom att utläsa frekvenserna ur topparna på graferna kan man se att topparna har bärfrekvenser i området kring frekvenserna i tabell \ref{table:carryfreq}. Topparna räknas från origo och utåt och filtrenas gränsfrekvens anges som normerad frekvens. 
+Genom att utläsa frekvenserna ur topparna i figur~\ref{fig:fft_orig_data} kan man se att topparna har bärfrekvenser i området kring frekvenserna i tabell \ref{table:carryfreq}. Topparna räknas från origo och utåt och filtrens gränsfrekvens anges som normerad frekvens. 
 ~\\
 \begin{center}
-\begin{tabular}{c | c | c}
+\begin{tabular}{c | c }
 	\hline
-	Topp & Ungefärlig bärfrekvens (Hz) & Filters gränsfrekvens \\ \hline
-	1 & $4,959 \cdot 10^4$ & 0.2-0.4 \\ \hline
-	2 & $8,313 \cdot 10^4$ & 0.5-0.65 \\ \hline
-	3 & $1,412 \cdot 10^5$ & 0.7-0.8 \\ \hline
+	Topp & Ungefärlig bärfrekvens (Hz) \\ \hline
+	1 & $4,959 \cdot 10^4$ \\ \hline
+	2 & $8,313 \cdot 10^4$ \\ \hline
+	3 & $1,412 \cdot 10^5$ \\ \hline
 \end{tabular}
 \captionof{table}{B{\"a}rfrekvenser} \label{table:carryfreq}
 \end{center}
 ~\\
-Filtrerar man sedan den givna signalen med hjälp av bandpassfilter med givna gränser ges utseende enligt figurer i appendix A. Enligt utseendet på graferna ser frekvenstopp 1 ut att innehålla någon form av information, medan den tredje toppen mest verkar innehålla vitt brus. 
+Filtrerar man sedan den givna signalen med hjälp av bandpassfilter med givna gränser ges utseende enligt figurer i appendix A. Enligt utseendet på graferna ser frekvenstopp i figur~\ref{fig:topp1_filter} ut att innehålla någon form av information, medan toppen i figur~\ref{fig:topp3_filter} mest verkar innehålla vitt brus. 
 
-Frekvenstopp 2 är mer svårbedömd - men en rimlig uppskattning är att den har ett alldeles för periodiskt utseende för att inehålla någon intressant information. 
+Frekvenstoppen i figur~\ref{fig:topp2_filter} är mer svårbedömd - men en rimlig uppskattning är att den har ett alldeles för periodiskt utseende för att innehålla någon intressant information. 
 
-Närmsta multipel av 19 kHz för den uppskattade bärfrekvensen, $f_c$ för topp 1 är 57 kHz, vilket väljs till bärfrekvens för fortsatta experiment. 
+Närmsta multipel av 19 kHz för den uppskattade bärfrekvensen, $f_c$, för frekvenstoppen i figur~\ref{fig:topp1_filter} är 57 kHz, vilket väljs till bärfrekvens för fortsatta experiment. 
 
 \newpage
 
 \subsection{Filtrering}
 
-När signalen skickas genom filtret givet i uppgiften skapas ett eko med styrkan $90\%$ av ursprungliga signalen. Detta eko har en tidsfördröjning som är lika med beloppet av differensen av filtrets två tidsfördröjningar.
+När signalen skickas genom filtret givet i uppgiften skapas ett eko med styrkan $90\%$ av ursprungliga signalen. Detta eko har en tidsfördröjning som är lika med beloppet av differensen av filtrets två tidsfördröjningar, alltså $|\tau_1 - \tau_2|$.
 
-\begin{gather}
-|\tau_1 - \tau_2|
-\label{equ:delay}
-\end{gather}
-
-Fördröjningen ges relativt enkelt av att x-korrelera det vita bruset i den tredje frekvenstoppen med sig självt. Detta ger tre tydliga toppar ur vilka man kan utläsa tidsfördröjningen. 
+Fördröjningen ges relativt enkelt ur mångtydighetsfunktionen för det vita bruset som syns i figur~\ref{fig:topp3_filter}. Detta ger tre tydliga toppar ur vilka man kan utläsa tidsfördröjningen. 
 
 \begin{figure}[htp]
   \begin{center}
   \includegraphics[keepaspectratio=true,width=\linewidth]{xCorr.png}  %skala och filnamn. 
   \end{center}
-  \caption{Vitt brus x-korrelerat} %figurtext.
+  \caption{Mångtydighetsfunktion för vitt brus} %figurtext.
   \label{fig:xCorr}
 \end{figure}
 ~\\
-Mätningar ur figur \ref{fig:xCorr} ger att tidsfördröjningen är lika med $37 ms$. 
+Mätningar ur figur \ref{fig:xCorr} ger att tidsfördröjningen är lika med $370\;ms$. 
 
-Då vi samplar med en frekvens av $400 000 Hz$ ges tidsfördröjningen i antal samples enligt nedan. 
+Då vi samplar med en frekvens av $400 000\;Hz$ ges tidsfördröjningen i antal samples enligt nedan. 
 
 \begin{gather}
-samples = 0,37 \cdot 400 000 = 148 000
+0,370 \cdot 400 000 = 148 000
 \label{equ:delaySamples}
 \end{gather}
 ~\\
@@ -141,28 +131,6 @@ Eftersom ekot är fördröjt med $148 000$ samples är de första $148 000$ samp
 Med hjälp utav dessa $148 000$ första samples kan man sedan plocka bort ekot från nästkommande $148 000$ samples. Loopar man sedan igenom alla samples ($7 800 000$) och filtrerar man helt bort ekot från dessa. 
 
 Processen är inte helt enkel att uttrycka i ord - därav följer nedan utdrag ur den kod som finns i Appendix B. 
-
-\begin{lstlisting}
-% Filtrerar bort eko
-% Anvander forsta 148 000 samples for att ta bort ekot som kommer sen.
-nrOfSamples = 148000;
-
-filtered = zeros(size(filterData1));
-filtered(1:nrOfSamples) = filterData1(1:nrOfSamples);
-
-for i = 0 : 50
-
-temp1 = filtered((1+nrOfSamples*i):(nrOfSamples + nrOfSamples*i));
-temp2 = filterData1((nrOfSamples+1+nrOfSamples*i):(i+2)*nrOfSamples);
-
-filtered((nrOfSamples+1+nrOfSamples*i):(i+2)*nrOfSamples) = temp2 - 0.9*temp1;
-
-end
-\end{lstlisting}
-~\\
-Där filterData1 är den filtrerade signalen innehållandess frekvenstopp 1. 
-
-\newpage
 ~\\
 \newpage
 \subsection{I-/Q-demodulation}
@@ -170,8 +138,8 @@ Där filterData1 är den filtrerade signalen innehållandess frekvenstopp 1.
 För att demodulera signalen används principer som beskrivs av Erik G. Larsson (2014). I- och Q-komponenter ges enligt nedan: 
 
 \begin{gather}
-x_{I}(t) = \Large{H}\{2x(t)\cos{(2{\pi}f_{c}t + \theta)}\} \\
-x_{Q}(t) = -\Large{H}\{2x(t)\sin{(2{\pi}f_{c}t + \theta)}\}
+x_{I}(t) = \Large{H}_{B/2\;Hz}^{LP}\{2x(t)\cos{(2{\pi}f_{c}t + \theta)}\} \\
+x_{Q}(t) = -\Large{H}_{B/2\;Hz}^{LP}\{2x(t)\sin{(2{\pi}f_{c}t + \theta)}\}
 \label{equ:iq}
 \end{gather}
 
