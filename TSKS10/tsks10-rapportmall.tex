@@ -119,20 +119,22 @@ Fördröjningen ges relativt enkelt ur mångtydighetsfunktionen för det vita br
 ~\\
 Mätningar ur figur \ref{fig:xCorr} ger att tidsfördröjningen är lika med $370\;ms$. 
 
-Då vi samplar med en frekvens av $400 000\;Hz$ ges tidsfördröjningen i antal samples enligt nedan. 
+Då vi samplar med en frekvens av $400 000\;Hz$ ges tidsfördröjningen $|\tau_1 - \tau_2|$ i antal samples (n) enligt nedan 
 
 \begin{gather}
-0,370 \cdot 400 000 = 148 000
+n = 0,370 \cdot 400 000 = 148 000
 \label{equ:delaySamples}
 \end{gather}
 ~\\
-Eftersom ekot är fördröjt med $148 000$ samples är de första $148 000$ samplingarna av den utfiltrerade intressanta datan från frekvenstopp 1 utan eko. 
+Innan man kan I-/Q-demodulera signalen behöver det eko som uppstår då signalen passerar det givna filtret tas bort. 
 
-Med hjälp utav dessa $148 000$ första samples kan man sedan plocka bort ekot från nästkommande $148 000$ samples. Loopar man sedan igenom alla samples ($7 800 000$) och filtrerar man helt bort ekot från dessa. 
+De första $n$ antal samples innehåller inget eko. Nästkommande $n$ samples innehåller eko som kan tvättas bort med förstkommande $n$ samples. När $n+n$ samplingar är fria från eko kan man använda samplingar $n-(2n-1)$ för att tvätta bort eko från nästkommande $n$ samples. Processen upprepas tills dess att hela signalen är fri från eko. Ett steg i processen utförs alltså enligt nedan
 
-Processen är inte helt enkel att uttrycka i ord - därav följer nedan utdrag ur den kod som finns i Appendix B. 
-~\\
-\newpage
+\begin{gather}
+S_{utan eko}^{aktuell} = S_{eko}^{aktuell} - 0,9S_{utan eko}^{tidigare}
+\label{equ:eko}
+\end{gather}
+
 \subsection{I-/Q-demodulation}
 
 För att demodulera signalen används principer som beskrivs av Erik G. Larsson (2014). I- och Q-komponenter ges enligt nedan: 
@@ -143,13 +145,20 @@ x_{Q}(t) = -\Large{H}_{B/2\;Hz}^{LP}\{2x(t)\sin{(2{\pi}f_{c}t + \theta)}\}
 \label{equ:iq}
 \end{gather}
 
-Där $\theta$ är fasförskjutningen. Fasförskjutningen har tyvärr testats fram då möjligt område för den är relativt litet, $[0,\frac{\pi}{2}]$, och det vad undertecknad vet ej finns något sätt att entydigt bestämma fasförskjutningen. Fasförskjutningen då meddelandet framgår bäst bestämdes till $0$.
+Där $\theta$ är fasförskjutningen. Fasförskjutningen har tyvärr testats fram då möjligt område för den är relativt litet, $[0,\frac{\pi}{2}]$, och det vad undertecknad vet ej finns något sätt att entydigt bestämma fasförskjutningen. Fasförskjutningen kan endast vara i området $[0,\frac{\pi}{2}]$ då I- och Q- demoduleringen sedan växlar plats på informationen - i o m egenskaper hos $\cos$ och $-\sin$. Fasförskjutningen då meddelandet framgår bäst bestämdes till $0$.
 
 
 % -------- Slutsatser ------------
 
 \newpage
 \section{Resultat och slutsats}
+
+Funna egenskaper hos signalen är: 
+
+\begin{itemize}
+	\item $f_c = 57kHz$
+	\item $|\tau_1 - \tau_2| = 370ms$
+\end{itemize}
 
 Först spelas två melodier - varav en blinka lilla stjärna. Sedan hörs två ordsspråk. Ordspråken som hörs är: 
 
