@@ -46,7 +46,7 @@ xlabel('Tid (s)');
 % filterData1 innehaller rimligen information. 
 
 % Barfrekvensen for filterData1 ar: 
-fc=57000;
+fc=38000;
 
 
 %--------- Uppgift 2 ---------
@@ -113,8 +113,8 @@ qFiltered = filter(B,A,Q);
 
 
 % Sampla ner sa ljud gar att spela satt vardet till 9 i Octave, 40 i Matlab
-qAudio=decimate(qFiltered, 40);
-iAudio=decimate(iFiltered, 40);
+qAudio=decimate(qFiltered, 9);
+iAudio=decimate(iFiltered, 9);
  
 % Spela ljud i Octave pa Linux
 % playsound(qAudio)
