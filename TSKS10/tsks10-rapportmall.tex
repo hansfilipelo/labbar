@@ -23,6 +23,7 @@
 \usepackage{mcode}
 \usepackage{a4wide}
 \usepackage{caption}
+\usepackage{epstopdf}
 
 \raggedbottom
 \sloppy
@@ -69,7 +70,7 @@ Jag börjar med att läsa in filen i Octave och sedan fouriertransformera signal
 
 \begin{figure}[htp]
   \begin{center}
-  \includegraphics[keepaspectratio=true,width=\linewidth]{fft_orig_data.png}  %skala och filnamn. 
+  \includegraphics[keepaspectratio=true,width=\linewidth]{fft_orig_data.eps}  %skala och filnamn. 
   \end{center}
   \caption{Dubbelsidigt amplitudspektrum för ursprunglig signal} %figurtext.
   \label{fig:fft_orig_data}
@@ -107,7 +108,7 @@ Fördröjningen ges relativt enkelt ur mångtydighetsfunktionen för det vita br
 
 \begin{figure}[htp]
   \begin{center}
-  \includegraphics[keepaspectratio=true,width=\linewidth]{xCorr.png}  %skala och filnamn. 
+  \includegraphics[keepaspectratio=true,width=\linewidth]{xCorr.eps}  %skala och filnamn. 
   \end{center}
   \caption{Mångtydighetsfunktion för vitt brus} %figurtext.
   \label{fig:xCorr}
@@ -169,7 +170,7 @@ Först spelas två melodier - varav en blinka lilla stjärna. Sedan hörs två o
 
 \begin{figure}[htp]
   \begin{center}
-  \includegraphics[keepaspectratio=true,width=\linewidth]{topp1_filter.png}  %skala och filnamn. 
+  \includegraphics[keepaspectratio=true,width=\linewidth]{topp1_filter.eps}  %skala och filnamn. 
   \end{center}
   \caption{Frekvenstopp 1 filtrerad} %figurtext.
   \label{fig:topp1_filter}
@@ -177,7 +178,7 @@ Först spelas två melodier - varav en blinka lilla stjärna. Sedan hörs två o
 
 \begin{figure}[htp]
   \begin{center}
-  \includegraphics[keepaspectratio=true,width=\linewidth]{topp2_filter.png}  %skala och filnamn. 
+  \includegraphics[keepaspectratio=true,width=\linewidth]{topp2_filter.eps}  %skala och filnamn. 
   \end{center}
   \caption{Frekvenstopp 2 filtrerad} %figurtext.
   \label{fig:topp2_filter}
@@ -185,7 +186,7 @@ Först spelas två melodier - varav en blinka lilla stjärna. Sedan hörs två o
 
 \begin{figure}[htp]
   \begin{center}
-  \includegraphics[keepaspectratio=true,width=\linewidth]{topp3_filter.png}  %skala och filnamn. 
+  \includegraphics[keepaspectratio=true,width=\linewidth]{topp3_filter.eps}  %skala och filnamn. 
   \end{center}
   \caption{Frekvenstopp 3 filtrerad} %figurtext.
   \label{fig:topp3_filter}
