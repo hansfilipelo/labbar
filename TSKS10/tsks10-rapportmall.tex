@@ -85,7 +85,8 @@ Genom att utläsa frekvenserna ur topparna i figur~\ref{fig:fft_orig_data} kan m
 	2 & $8,313 \cdot 10^4$ \\ \hline
 	3 & $1,412 \cdot 10^5$ \\ \hline
 \end{tabular}
-\captionof{table}{B{\"a}rfrekvenser} \label{table:carryfreq}
+% \captionof{table}{B{\"a}rfrekvenser} 
+\label{table:carryfreq}
 \end{center}
 Filtrerar man sedan den givna signalen med hjälp av bandpassfilter med givna gränser ges utseende enligt figurer i appendix A. Enligt utseendet på graferna ser frekvenstopp i figur~\ref{fig:topp1_filter} ut att innehålla någon form av information, medan toppen i figur~\ref{fig:topp3_filter} mest verkar innehålla vitt brus. 
 
@@ -97,7 +98,7 @@ Närmsta multipel av 19 kHz för den uppskattade bärfrekvensen, $f_c$, för fre
 
 När signalen skickas genom filtret givet i uppgiften skapas ett eko med styrkan $90\%$ av ursprungliga signalen. Detta eko har en tidsfördröjning som är lika med beloppet av differensen av filtrets två tidsfördröjningar, alltså $|\tau_1 - \tau_2|$.
 
-Fördröjningen ges relativt enkelt ur mångtydighetsfunktionen för det vita bruset som syns i figur~\ref{fig:topp3_filter}. Detta ger tre tydliga toppar ur vilka man kan utläsa tidsfördröjningen. 
+Fördröjningen ges relativt enkelt ur mångtydighetsfunktionen\footnote{Signals, Information and Communications, kapitel 4, Larsson Erik G, draft 11342, februari 2014} för det vita bruset som syns i figur~\ref{fig:topp3_filter}. Detta ger tre tydliga toppar i grafen. Tidsfördröjningen kan sedan utläsas som differensen mellan två intilliggande toppars position. I figur \ref{fig:xCorr} syns två toppar.  
 \begin{figure}[htp]
   \begin{center}
   \includegraphics[keepaspectratio=true,width=\linewidth]{xCorr.eps}  %skala och filnamn. 
@@ -122,6 +123,8 @@ S_{utan eko}^{aktuell} = S_{eko}^{aktuell} - 0,9S_{utan eko}^{tidigare}
 \label{equ:eko}
 \end{gather}
 
+Där $S_{utan eko}^{aktuell}$ är aktuella samples utan eko, $S_{eko}^{aktuell}$ de just nu aktuella samplingarna som tvättas, och $S_{utan eko}^{tidigare}$ är de förekommande $n$ samplingarna. 
+
 \subsection{I-/Q-demodulation}
 
 För att demodulera signalen används principer som beskrivs av Erik G. Larsson (2014). I- och Q-komponenter ges enligt nedan: 
@@ -132,7 +135,9 @@ x_{Q}(t) = -\Large{H}_{B/2\;Hz}^{LP}\{2x(t)\sin{(2{\pi}f_{c}t + \theta)}\}
 \label{equ:iq}
 \end{gather}
 
-Där $\theta$ är fasförskjutningen. Fasförskjutningen har tyvärr testats fram då möjligt område för den är relativt litet, $[0,\frac{\pi}{2}]$, och det vad undertecknad vet ej finns något sätt att entydigt bestämma fasförskjutningen. Fasförskjutningen kan endast vara i området $[0,\frac{\pi}{2}]$ då I- och Q- demoduleringen sedan växlar plats på informationen - i o m egenskaper hos $\cos$ och $-\sin$. Fasförskjutningen då meddelandet framgår bäst bestämdes till $0$.
+Där $\theta$ är fasförskjutningen, $x(t)$ signalen som demoduleras, $B$ bandbredden samt att $x_{I}(t)$ och $x_{Q}(t)$ är de demodulerade signalbanden. 
+
+Signalerna demoduleras först. Fasförskjutningen testats sedan fram genom att lyssna på resulterande ljudet av signalen. 
 
 
 % -------- Slutsatser ------------
