@@ -7,7 +7,7 @@
 % open signal-hanel742;
 
 % Ursprungligen i Matlab - numera i Octave. Konvertera variabelnamn
-% data = ans;
+%data = ans;
 
 fs = 400000;
 % Ta fram fouriertransform och spektra
@@ -17,7 +17,7 @@ l=length(data);
 fAxis=[-200000:fs/l:200000-(fs/l)];
 
 figure(1);
-plot(fAxis,absF);
+plot(fAxis(l/2+5000:l),absF(l/2+5000:l));
 xlabel('Frekvens (Hz)');
 
 % Filtrering av forsta delen
