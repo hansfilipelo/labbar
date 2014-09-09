@@ -24,6 +24,7 @@
 \usepackage{a4wide}
 \usepackage{caption}
 \usepackage{epstopdf}
+\usepackage{pdfpages}
 
 \raggedbottom
 \sloppy
@@ -158,46 +159,6 @@ Först spelas två melodier - varav en blinka lilla stjärna. Sedan hörs två o
 \end{itemize}
 % -------- Appendix ---------------
 
-\appendix
-\pagestyle{empty}
-\newgeometry{left=2cm,right=2cm,bottom=2cm,top=2cm}
-\section{Filtrerade signaler}
-
-\begin{figure}[htp]
-  \begin{center}
-  \includegraphics[keepaspectratio=true,width=\linewidth]{topp1_filter.eps}  %skala och filnamn. 
-  \end{center}
-  \caption{Frekvenstopp 1 filtrerad} %figurtext.
-  \label{fig:topp1_filter}
-\end{figure}
-
-\begin{figure}[htp]
-  \begin{center}
-  \includegraphics[keepaspectratio=true,width=\linewidth]{topp2_filter.eps}  %skala och filnamn. 
-  \end{center}
-  \caption{Frekvenstopp 2 filtrerad} %figurtext.
-  \label{fig:topp2_filter}
-\end{figure}
-
-\begin{figure}[htp]
-  \begin{center}
-  \includegraphics[keepaspectratio=true,width=\linewidth]{topp3_filter.eps}  %skala och filnamn. 
-  \end{center}
-  \caption{Frekvenstopp 3 filtrerad} %figurtext.
-  \label{fig:topp3_filter}
-\end{figure}
-
-\newpage
-\section{Kod för GNU Octave}
-
-Fil: tsks10.m
-
-\lstinputlisting{tsks10.m}
-
-\newpage
-
-Fil: playsound.m
-
-\lstinputlisting{playsound.m}
+\includepdf[pages={-}]{appendix.pdf}
 
 \end{document}
