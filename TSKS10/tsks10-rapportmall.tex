@@ -37,15 +37,11 @@
 
 \maketitle
 
-\section{Inledning}
-
-Vid kommunikation används ofta I-/Q-modulering för att överföra en signal inom ett givet frekvensutrymme. I och med överföringen kan tidsfördröjningar införas. I mottagaränden måste dessa tidsfördröjningar kompenseras för innan överföringen sedan kan I-/Q-demoduleras för att extrahera ljudinformationen 
-
-\subsection{Syfte}
+\section{Syfte}
 
 Syftet med denna laboration är att finna bärfrekvens för en given signal, filtrera bort oönskade delar av överföringen och sedan I-/Q-demodulera signalen för att extrahera relevant information. 
 
-\subsection{Materiel och förutsättningar}
+\section{Materiel och förutsättningar}
 
 Filen signal-hanel742.wav är given med den kända samplingsfrekvensen 400 kHz. Givet är också att filen innehåller en smalbandig signal som är I-/Q-modulerad och har skickats genom filtret nedan. 
 
@@ -75,23 +71,21 @@ Jag börjar med att läsa in filen i Octave och sedan fouriertransformera signal
 
 \subsection{Att finna bärfrekvensen}
 
-Jag vill nu filtrera ut signalelementen för de olika topparna ur totala signalen. För att göra detta använder jag tre olika bandpassfilter med gränsfrekvenserna $[40000, 80000]$, $[100000, 130000]$ samt $[140000, 160000]$.
+Jag vill nu filtrera ut signalelementen för de olika topparna ur totala signalen. 
 
-Genom att utläsa frekvenserna ur topparna i figur~\ref{fig:fft_orig_data} kan man se att topparna har bärfrekvenser i området kring frekvenserna i tabell \ref{table:carryfreq}. Topparna räknas från origo och utåt och filtrens gränsfrekvens anges till höger i tabellen. 
-\begin{center}
-\begin{tabular}{c | c }
-	\hline
-	Topp & Ungefärlig bärfrekvens (Hz) \\ \hline
-	1 & $4,959 \cdot 10^4$ \\ \hline
-	2 & $8,313 \cdot 10^4$ \\ \hline
-	3 & $1,412 \cdot 10^5$ \\ \hline
-\end{tabular}
-% \captionof{table}{B{\"a}rfrekvenser} 
-\label{table:carryfreq}
-\end{center}
-Filtrerar man sedan den givna signalen med hjälp av bandpassfilter med givna gränser ges utseende enligt figurer i appendix A. Enligt utseendet på graferna ser frekvenstopp i figur~\ref{fig:topp1_filter} ut att innehålla någon form av information, medan toppen i figur~\ref{fig:topp3_filter} mest verkar innehålla vitt brus. 
+Genom att utläsa frekvenserna ur topparna i figur~\ref{fig:fft_orig_data} kan man se att topparna har bärfrekvenser i området kring frekvenserna $4,959 \cdot 10^4$, $8,313 \cdot 10^4$ samt $1,412 \cdot 10^5$.
 
-Frekvenstoppen i figur~\ref{fig:topp2_filter} är mer svårbedömd - men en rimlig uppskattning är att den har ett alldeles för periodiskt utseende för att innehålla någon intressant information. 
+Filtrerar man sedan den givna signalen med hjälp av bandpassfilter kring dessa frekvenser och plottar graferna kan man sedan genom att studera graferna uppskatta vilken information respektive frekvensband innehåller. . 
+
+\begin{figure}[htp]
+  \begin{center}
+  \includegraphics[keepaspectratio=true,width=\linewidth]{topp1.eps}  %skala och filnamn. 
+  \end{center}
+  \caption{Frekvenstopp 1 filtrerad} %figurtext.
+  \label{fig:topp1_filter}
+\end{figure}
+
+Enligt utseendet på graferna ser frekvenstopp i figur~\ref{fig:topp1_filter} ut att innehålla två intervall med någon form av information, följt av brus mot slutet. Detta är precis det utseende vi eftersöker enligt given uppgift. Den tredje frekvenstoppen i det sista frekvensbandet, kring $1,412 \cdot 10^5$, verkar innehålla vitt brus. 
 
 Närmsta multipel av 19 kHz för den uppskattade bärfrekvensen, $f_c$, för frekvenstoppen i figur~\ref{fig:topp1_filter} är 57 kHz, vilket väljs till bärfrekvens för fortsatta experiment. 
 
@@ -136,7 +130,7 @@ x_{Q}(t) = -\Large{H}_{B/2\;Hz}^{LP}\{2x(t)\sin{(2{\pi}f_{c}t + \theta)}\}
 \label{equ:iq}
 \end{gather}
 
-Där $\theta$ är fasförskjutningen, $x(t)$ signalen som demoduleras, $B$ bandbredden samt att $x_{I}(t)$ och $x_{Q}(t)$ är de demodulerade signalbanden. 
+Där $\theta$ är fasförskjutningen, $x(t)$ signalen som demoduleras, $B$ bandbredden hos signalen vid den ursprungliga samplingen av den, samt att $x_{I}(t)$ och $x_{Q}(t)$ är de demodulerade signalbanden. 
 
 Signalerna demoduleras först. Fasförskjutningen testats sedan fram genom att lyssna på resulterande ljudet av signalen. 
 
