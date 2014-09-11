@@ -52,7 +52,7 @@ h(t) = \delta(t - \tau_1) + \delta(t - \tau_2)
 
 På förhand ges också att bärfrekvensen för relevant del av signalen är en multipel av 19 kHz.
 
-Signalen innehåller två melodier samt två olika ordspråk. 
+Signalen innehåller två melodier, två olika ordspråk samt vitt brus. 
 
 För att utföra laborationen används GNU Octave med vertygslådor för ljud samt signaler (octave-audio och octave-signal) installerat. 
 
@@ -93,7 +93,7 @@ Närmsta multipel av 19 kHz för den uppskattade bärfrekvensen, $f_c$, för fre
 
 När signalen skickas genom filtret givet i uppgiften skapas ett eko med styrkan $90\%$ av ursprungliga signalen. Detta eko har en tidsfördröjning som är lika med beloppet av differensen av filtrets två tidsfördröjningar, alltså $|\tau_1 - \tau_2|$.
 
-Fördröjningen ges relativt enkelt ur mångtydighetsfunktionen\footnote{Signals, Information and Communications, kapitel 4, Larsson Erik G, draft 11342, februari 2014} för det vita bruset som finns i slutet av vår filtrerade signal. Detta ger tre tydliga toppar i grafen. Tidsfördröjningen kan sedan utläsas som differensen mellan två intilliggande toppars position. I figur \ref{fig:xCorr} syns två toppar.  
+Fördröjningen ges relativt enkelt ur mångtydighetsfunktionen\footnote{Signals, Information and Communications, kapitel 4, Larsson Erik G, draft 11342, februari 2014} för det vita bruset som finns i slutet av vår filtrerade signal. Jag använder det vita bruset då detta är helt okorrelerat. Detta ger tre tydliga toppar i grafen. Tidsfördröjningen kan sedan utläsas som differensen mellan två intilliggande toppars position. I figur \ref{fig:xCorr} syns två toppar.  
 \begin{figure}[htp]
   \begin{center}
   \includegraphics[keepaspectratio=true,width=\linewidth]{xCorr.eps}  %skala och filnamn. 
@@ -132,7 +132,9 @@ x_{Q}(t) = -\Large{H}_{B/2\;Hz}^{LP}\{2x(t)\sin{(2{\pi}f_{c}t + \theta)}\}
 
 Där $\theta$ är fasförskjutningen, $x(t)$ signalen som demoduleras, $B$ bandbredden hos signalen vid den ursprungliga samplingen av den, samt att $x_{I}(t)$ och $x_{Q}(t)$ är de demodulerade signalbanden. 
 
-Signalerna demoduleras först. Fasförskjutningen testats sedan fram genom att lyssna på resulterande ljudet av signalen. 
+Signalerna demoduleras först. Fasförskjutningen testats sedan fram genom att lyssna på resulterande ljudet av signalen. Fasföskjutningen kan vara vilken vinkel som helst. Då $sin(\theta)$ blir $cos(\theta)$ efter $\frac{\pi}{2}$ och vise versa. 
+
+Fasförskjutningen för signalen testades fram till $0$
 
 
 % -------- Slutsatser ------------
@@ -143,6 +145,7 @@ Funna egenskaper hos signalen är:
 \begin{itemize}
 	\item $f_c = 57$ kHz
 	\item $|\tau_1 - \tau_2| = 370$ ms
+  \item Fasföskjutningen, $\theta = 0$
 \end{itemize}
 
 Först spelas två melodier - varav en blinka lilla stjärna. Sedan hörs två ordsspråk. Ordspråken som hörs är: 
